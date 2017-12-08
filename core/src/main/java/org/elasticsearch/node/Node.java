@@ -521,6 +521,7 @@ public class Node implements Closeable {
     }
 
     static void warnIfPreRelease(final Version version, final boolean isSnapshot, final Logger logger) {
+        //it's ok
         if (!version.isRelease() || isSnapshot) {
             logger.warn(
                 "version [{}] is a pre-release version of Elasticsearch and is not suitable for production",
