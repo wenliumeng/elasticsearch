@@ -526,6 +526,7 @@ public class Node implements Closeable {
             logger.warn(
                 "version [{}] is a pre-release version of Elasticsearch and is not suitable for production",
                 Version.displayVersion(version, isSnapshot));
+            logger.info("version={},isSnashot={}",Version.displayVersion(version,isSnapshot),isSnapshot);
         }
     }
 
