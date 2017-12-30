@@ -385,6 +385,7 @@ public class DiscoveryNode implements Writeable, ToXContentFragment {
         builder.startObject(getId());
         builder.field("name", getName());
         builder.field("ephemeral_id", getEphemeralId());
+        System.out.println("调用DiscoveryNode的ToXContent方法");
         builder.field("transport_address", getAddress().toString());
 
         builder.startObject("attributes");

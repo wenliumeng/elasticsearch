@@ -99,7 +99,7 @@ public class MinimumMasterNodesIT extends ESIntegTestCase {
         ClusterHealthResponse clusterHealthResponse = client().admin().cluster().prepareHealth().setWaitForEvents(Priority.LANGUID).setWaitForNodes("2").execute().actionGet();
         assertThat(clusterHealthResponse.isTimedOut(), equalTo(false));
 
-        state = client().admin().cluster().prepareState().setLocal(true).execute().actionGet().getState();
+        state = client().admin().cluster().prepareState().setLocal(true).execute().actionGet().getState();//输出node.name -> client.type -> node
         assertThat(state.blocks().hasGlobalBlock(DiscoverySettings.NO_MASTER_BLOCK_ID), equalTo(false));
         state = client().admin().cluster().prepareState().setLocal(true).execute().actionGet().getState();
         assertThat(state.blocks().hasGlobalBlock(DiscoverySettings.NO_MASTER_BLOCK_ID), equalTo(false));
