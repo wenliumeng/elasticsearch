@@ -88,6 +88,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
     private IndicesOptions indicesOptions = DEFAULT_INDICES_OPTIONS;
 
     public SearchRequest() {
+        System.out.println("SearchRequest 调用无参构造函数");
     }
 
     /**
@@ -102,6 +103,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * Constructs a new search request against the provided indices with the given search source.
      */
     public SearchRequest(String[] indices, SearchSourceBuilder source) {
+        System.out.println(String.format("SearchRequest 调用构造函数 参数 -> indices=[%s] SearchSourceBuilder=[%s]",Arrays.asList(indices),source));
         if (source == null) {
             throw new IllegalArgumentException("source must not be null");
         }
@@ -111,6 +113,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
 
     @Override
     public ActionRequestValidationException validate() {
+        System.out.println("SearchRequest 验证");
         ActionRequestValidationException validationException = null;
         if (source != null && source.trackTotalHits() == false && scroll() != null) {
             validationException =
@@ -128,6 +131,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      */
     @Override
     public SearchRequest indices(String... indices) {
+        System.out.println(String.format("SearchRequest indices"));
         Objects.requireNonNull(indices, "indices must not be null");
         for (String index : indices) {
             Objects.requireNonNull(index, "index must not be null");
@@ -138,10 +142,12 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
 
     @Override
     public IndicesOptions indicesOptions() {
+        System.out.println("SearchRequest indicesOptions 1");
         return indicesOptions;
     }
 
     public SearchRequest indicesOptions(IndicesOptions indicesOptions) {
+        System.out.println("SearchRequest indicesOptions 2");
         this.indicesOptions = Objects.requireNonNull(indicesOptions, "indicesOptions must not be null");
         return this;
     }
@@ -151,6 +157,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * all types.
      */
     public String[] types() {
+        System.out.println("SearchRequest types 1");
         return types;
     }
 
@@ -159,6 +166,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * all types.
      */
     public SearchRequest types(String... types) {
+        System.out.println("SearchRequest types 2");
         Objects.requireNonNull(types, "types must not be null");
         for (String type : types) {
             Objects.requireNonNull(type, "type must not be null");
@@ -171,6 +179,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * A comma separated list of routing values to control the shards the search will be executed on.
      */
     public String routing() {
+        System.out.println("SearchRequest routing 1");
         return this.routing;
     }
 
@@ -178,6 +187,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * A comma separated list of routing values to control the shards the search will be executed on.
      */
     public SearchRequest routing(String routing) {
+        System.out.println("SearchRequest routing 2");
         this.routing = routing;
         return this;
     }
@@ -186,6 +196,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * The routing values to control the shards that the search will be executed on.
      */
     public SearchRequest routing(String... routings) {
+        System.out.println("SearchRequest routing 3");
         this.routing = Strings.arrayToCommaDelimitedString(routings);
         return this;
     }
@@ -196,11 +207,13 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * a custom value, which guarantees that the same order will be used across different requests.
      */
     public SearchRequest preference(String preference) {
+        System.out.println("SearchRequest preference 1");
         this.preference = preference;
         return this;
     }
 
     public String preference() {
+        System.out.println("SearchRequest preference 2");
         return this.preference;
     }
 
@@ -208,6 +221,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * The search type to execute, defaults to {@link SearchType#DEFAULT}.
      */
     public SearchRequest searchType(SearchType searchType) {
+        System.out.println("SearchRequest searchType 1");
         this.searchType = Objects.requireNonNull(searchType, "searchType must not be null");
         return this;
     }
@@ -218,6 +232,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * "query_then_fetch"/"queryThenFetch", and "query_and_fetch"/"queryAndFetch".
      */
     public SearchRequest searchType(String searchType) {
+        System.out.println("SearchRequest searchType 2");
         return searchType(SearchType.fromString(searchType));
     }
 
@@ -225,6 +240,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * The source of the search request.
      */
     public SearchRequest source(SearchSourceBuilder sourceBuilder) {
+        System.out.println("SearchRequest source 2");
         this.source = Objects.requireNonNull(sourceBuilder, "source must not be null");
         return this;
     }
@@ -233,6 +249,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * The search source to execute.
      */
     public SearchSourceBuilder source() {
+        System.out.println("SearchRequest source 1");
         return source;
     }
 
@@ -240,6 +257,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * The tye of search to execute.
      */
     public SearchType searchType() {
+        System.out.println("SearchRequest searchType");
         return searchType;
     }
 
@@ -248,6 +266,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      */
     @Override
     public String[] indices() {
+        System.out.println("SearchRequest indices");
         return indices;
     }
 
@@ -255,6 +274,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * If set, will enable scrolling of the search request.
      */
     public Scroll scroll() {
+        System.out.println("SearchRequest scroll 1");
         return scroll;
     }
 
@@ -262,6 +282,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * If set, will enable scrolling of the search request.
      */
     public SearchRequest scroll(Scroll scroll) {
+        System.out.println("SearchRequest scroll 2");
         this.scroll = scroll;
         return this;
     }
@@ -270,6 +291,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * If set, will enable scrolling of the search request for the specified timeout.
      */
     public SearchRequest scroll(TimeValue keepAlive) {
+        System.out.println("SearchRequest scroll 3");
         return scroll(new Scroll(keepAlive));
     }
 
@@ -277,6 +299,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * If set, will enable scrolling of the search request for the specified timeout.
      */
     public SearchRequest scroll(String keepAlive) {
+        System.out.println("SearchRequest scroll 4");
         return scroll(new Scroll(TimeValue.parseTimeValue(keepAlive, null, getClass().getSimpleName() + ".Scroll.keepAlive")));
     }
 
@@ -286,11 +309,13 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * will default to the index level setting if request cache is enabled or not).
      */
     public SearchRequest requestCache(Boolean requestCache) {
+        System.out.println("SearchRequest requestCache 1");
         this.requestCache = requestCache;
         return this;
     }
 
     public Boolean requestCache() {
+        System.out.println("SearchRequest requestCache 2");
         return this.requestCache;
     }
 
@@ -299,6 +324,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * mechanism to reduce the memory overhead per search request if the potential number of shards in the request can be large.
      */
     public void setBatchedReduceSize(int batchedReduceSize) {
+        System.out.println("SearchRequest setBatchedReduceSize");
         if (batchedReduceSize <= 1) {
             throw new IllegalArgumentException("batchedReduceSize must be >= 2");
         }
@@ -310,6 +336,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * protection mechanism to reduce the memory overhead per search request if the potential number of shards in the request can be large.
      */
     public int getBatchedReduceSize() {
+        System.out.println("SearchRequest getBatchedReduceSize");
         return batchedReduceSize;
     }
 
@@ -319,6 +346,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * with this number to reduce the cluster load. The default grows with the number of nodes in the cluster but is at most <tt>256</tt>.
      */
     public int getMaxConcurrentShardRequests() {
+        System.out.println("SearchRequest getMaxConcurrentShardRequests");
         return maxConcurrentShardRequests == 0 ? 256 : maxConcurrentShardRequests;
     }
 
@@ -328,11 +356,13 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * with this number to reduce the cluster load. The default grows with the number of nodes in the cluster but is at most <tt>256</tt>.
      */
     public void setMaxConcurrentShardRequests(int maxConcurrentShardRequests) {
+        System.out.println("SearchRequest setMaxConcurrentShardRequests");
         if (maxConcurrentShardRequests < 1) {
             throw new IllegalArgumentException("maxConcurrentShardRequests must be >= 1");
         }
         this.maxConcurrentShardRequests = maxConcurrentShardRequests;
     }
+
     /**
      * Sets a threshold that enforces a pre-filter roundtrip to pre-filter search shards based on query rewriting if the number of shards
      * the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for
@@ -340,6 +370,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * bounds and the query are disjoint. The default is <tt>128</tt>
      */
     public void setPreFilterShardSize(int preFilterShardSize) {
+        System.out.println("SearchRequest setPreFilterShardSize");
         if (preFilterShardSize < 1) {
             throw new IllegalArgumentException("preFilterShardSize must be >= 1");
         }
@@ -353,6 +384,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * bounds and the query are disjoint. The default is <tt>128</tt>
      */
     public int getPreFilterShardSize() {
+        System.out.println("SearchRequest getPreFilterShardSize");
         return preFilterShardSize;
     }
 
@@ -360,6 +392,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * Returns <code>true</code> iff the maxConcurrentShardRequest is set.
      */
     boolean isMaxConcurrentShardRequestsSet() {
+        System.out.println("SearchRequest isMaxConcurrentShardRequestsSet");
         return maxConcurrentShardRequests != 0;
     }
 
@@ -367,11 +400,13 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
      * @return true if the request only has suggest
      */
     public boolean isSuggestOnly() {
+        System.out.println("SearchRequest isSuggestOnly");
         return source != null && source.isSuggestOnly();
     }
 
     @Override
     public Task createTask(long id, String type, String action, TaskId parentTaskId) {
+        System.out.println("SearchRequest createTask");
         // generating description in a lazy way since source can be quite big
         return new SearchTask(id, type, action, null, parentTaskId) {
             @Override
@@ -397,6 +432,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
     @Override
     public void readFrom(StreamInput in) throws IOException {
         super.readFrom(in);
+        System.out.println("SearchRequest readFrom");
         searchType = SearchType.fromId(in.readByte());
         indices = new String[in.readVInt()];
         for (int i = 0; i < indices.length; i++) {
@@ -420,6 +456,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
     public void writeTo(StreamOutput out) throws IOException {
         super.writeTo(out);
         out.writeByte(searchType.id());
+        System.out.println("SearchRequest writeTo");
         out.writeVInt(indices.length);
         for (String index : indices) {
             out.writeString(index);
@@ -440,6 +477,7 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
 
     @Override
     public boolean equals(Object o) {
+        System.out.println("SearchRequest equals");
         if (this == o) {
             return true;
         }
@@ -463,12 +501,14 @@ public final class SearchRequest extends ActionRequest implements IndicesRequest
 
     @Override
     public int hashCode() {
+        System.out.println("SearchRequest hashCode");
         return Objects.hash(searchType, Arrays.hashCode(indices), routing, preference, source, requestCache,
-                scroll, Arrays.hashCode(types), indicesOptions, batchedReduceSize, maxConcurrentShardRequests, preFilterShardSize);
+            scroll, Arrays.hashCode(types), indicesOptions, batchedReduceSize, maxConcurrentShardRequests, preFilterShardSize);
     }
 
     @Override
     public String toString() {
+        System.out.println("SearchRequest toString");
         return "SearchRequest{" +
                 "searchType=" + searchType +
                 ", indices=" + Arrays.toString(indices) +
