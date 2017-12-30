@@ -125,7 +125,6 @@ public class Setting<T> extends ToXContentToBytes {
 
     private Setting(Key key, @Nullable Setting<T> fallbackSetting, Function<Settings, String> defaultValue, Function<String, T> parser,
             Validator<T> validator, Property... properties) {
-        System.out.println("开始构建Setting " + key.toString());
         assert this instanceof SecureSetting || this.isGroupSetting() || parser.apply(defaultValue.apply(Settings.EMPTY)) != null
                : "parser returned null";
         this.key = key;
