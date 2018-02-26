@@ -118,7 +118,9 @@ class Elasticsearch extends EnvironmentAwareCommand {
         final boolean quiet = options.has(quietOption);
 
         try {
+            System.out.println("init 开始 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓");
             init(daemonize, pidFile, quiet, env);
+            System.out.println(String.format("init 结束 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑%n"));
         } catch (NodeValidationException e) {
             throw new UserException(ExitCodes.CONFIG, e.getMessage());
         }

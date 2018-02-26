@@ -214,6 +214,7 @@ public class Setting<T> extends ToXContentToBytes {
      */
     public Setting(Key key, Setting<T> fallbackSetting, Function<String, T> parser, Property... properties) {
         this(key, fallbackSetting, fallbackSetting::getRaw, parser, (v, m) -> {}, properties);
+        System.out.println("setting 构造 " + key + "  " + fallbackSetting.getKey());
     }
 
     /**
@@ -347,6 +348,7 @@ public class Setting<T> extends ToXContentToBytes {
     }
 
     private T get(Settings settings, boolean validate) {
+        System.out.print("setting 开始基本获取操作 ..... ");
         String value = getRaw(settings);
         try {
             T parsed = parser.apply(value);
@@ -385,6 +387,7 @@ public class Setting<T> extends ToXContentToBytes {
      */
     public void diff(Settings.Builder builder, Settings source, Settings defaultSettings) {
         if (exists(source) == false) {
+            System.out.println("setting 3");
             builder.put(getKey(), getRaw(defaultSettings));
         }
     }
@@ -499,9 +502,11 @@ public class Setting<T> extends ToXContentToBytes {
             @Override
             public void apply(Tuple<A, B> value, Settings current, Settings previous) {
                 if (aSettingUpdater.hasChanged(current, previous)) {
+                    System.out.println("setting 1");
                     logger.info("updating [{}] from [{}] to [{}]", aSetting.key, aSetting.getRaw(previous), aSetting.getRaw(current));
                 }
                 if (bSettingUpdater.hasChanged(current, previous)) {
+                    System.out.println("setting 2");
                     logger.info("updating [{}] from [{}] to [{}]", bSetting.key, bSetting.getRaw(previous), bSetting.getRaw(current));
                 }
                 consumer.accept(value.v1(), value.v2());
@@ -737,6 +742,7 @@ public class Setting<T> extends ToXContentToBytes {
                 @Override
                 public void apply(Settings value, Settings current, Settings previous) {
                     if (logger.isInfoEnabled()) { // getRaw can create quite some objects
+                        System.out.println("GroupSetting 初始化");
                         logger.info("updating [{}] from [{}] to [{}]", key, getRaw(previous), getRaw(current));
                     }
                     consumer.accept(value);
@@ -813,6 +819,7 @@ public class Setting<T> extends ToXContentToBytes {
 
         @Override
         public boolean hasChanged(Settings current, Settings previous) {
+            System.out.println("setting 9");
             final String newValue = getRaw(current);
             final String value = getRaw(previous);
             assert isGroupSetting() == false : "group settings must override this method";
@@ -823,6 +830,7 @@ public class Setting<T> extends ToXContentToBytes {
 
         @Override
         public T getValue(Settings current, Settings previous) {
+            System.out.println("setting 7");
             final String newValue = getRaw(current);
             final String value = getRaw(previous);
             try {
@@ -837,6 +845,7 @@ public class Setting<T> extends ToXContentToBytes {
 
         @Override
         public void apply(T value, Settings current, Settings previous) {
+            System.out.println("setting Updater");
             logger.info("updating [{}] from [{}] to [{}]", key, getRaw(previous), getRaw(current));
             consumer.accept(value);
         }
@@ -1011,6 +1020,7 @@ public class Setting<T> extends ToXContentToBytes {
     // TODO this one's two argument get is still broken
     public static <T> Setting<List<T>> listSetting(String key, Setting<List<T>> fallbackSetting, Function<String, T> singleValueParser,
                                                    Property... properties) {
+        System.out.println("listSetting " + key);
         return listSetting(key, (s) -> parseableStringToList(fallbackSetting.getRaw(s)), singleValueParser, properties);
     }
 

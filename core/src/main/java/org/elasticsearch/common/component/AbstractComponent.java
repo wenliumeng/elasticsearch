@@ -27,6 +27,9 @@ import org.elasticsearch.common.logging.Loggers;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.node.Node;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 public abstract class AbstractComponent {
 
     protected final Logger logger;
@@ -34,6 +37,8 @@ public abstract class AbstractComponent {
     protected final Settings settings;
 
     public AbstractComponent(Settings settings) {
+        System.out.println("实例化 " + this.getClass().getName());
+        System.out.println(String.format("settings%s" , settings.names()));
         this.logger = Loggers.getLogger(getClass(), settings);
         this.deprecationLogger = new DeprecationLogger(logger);
         this.settings = settings;

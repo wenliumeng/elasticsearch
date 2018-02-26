@@ -168,11 +168,13 @@ final class Bootstrap {
             throw new BootstrapException(e);
         }
 
+        System.out.println("Bootstrap 初始化本地资源 开始 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓");
         initializeNatives(
                 environment.tmpFile(),
                 BootstrapSettings.MEMORY_LOCK_SETTING.get(settings),
                 BootstrapSettings.SYSTEM_CALL_FILTER_SETTING.get(settings),
                 BootstrapSettings.CTRLHANDLER_SETTING.get(settings));
+        System.out.println(String.format("Bootstrap 初始化本地资源 结束 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑%n"));
 
         // initialize probes before the security manager is installed
         initializeProbes();
@@ -204,7 +206,9 @@ final class Bootstrap {
 
         // install SM after natives, shutdown hooks, etc.
         try {
+            System.out.println("Security.configure 开始 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓");
             Security.configure(environment, BootstrapSettings.SECURITY_FILTER_BAD_DEFAULTS_SETTING.get(settings));
+            System.out.println(String.format("Security.configure 结束 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑%n"));
         } catch (IOException | NoSuchAlgorithmException e) {
             throw new BootstrapException(e);
         }

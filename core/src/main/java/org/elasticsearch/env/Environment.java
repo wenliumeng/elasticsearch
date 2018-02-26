@@ -91,6 +91,7 @@ public class Environment {
 
     public Environment(final Settings settings, final Path configPath) {
         final Path homeFile;
+        System.out.println("Environment 实例化 开始 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓");
         if (PATH_HOME_SETTING.exists(settings)) {
             homeFile = PathUtils.get(PATH_HOME_SETTING.get(settings)).normalize();
         } else {
@@ -119,6 +120,7 @@ public class Environment {
             dataWithClusterFiles = new Path[]{homeFile.resolve("data").resolve(clusterName.value())};
         }
         if (PATH_SHARED_DATA_SETTING.exists(settings)) {
+
             sharedDataFile = PathUtils.get(PATH_SHARED_DATA_SETTING.get(settings)).normalize();
         } else {
             sharedDataFile = null;
@@ -157,6 +159,7 @@ public class Environment {
         }
         finalSettings.put(PATH_LOGS_SETTING.getKey(), logsFile);
         this.settings = finalSettings.build();
+        System.out.println(String.format("Environment 实例化 结束 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑%n"));
     }
 
     /**
