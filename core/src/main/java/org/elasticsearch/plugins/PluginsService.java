@@ -272,6 +272,10 @@ public class PluginsService extends AbstractComponent {
         Set<Bundle> bundles = new LinkedHashSet<>();
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(modulesDirectory)) {
             for (Path module : stream) {
+                if (module.getFileName().toString().equals(".DS_Store")) {
+                    System.out.println("mac .DS_Store skipping");
+                    continue;
+                }
                 PluginInfo info = PluginInfo.readFromProperties(module);
                 Set<URL> urls = new LinkedHashSet<>();
                 // gather urls for jar files
