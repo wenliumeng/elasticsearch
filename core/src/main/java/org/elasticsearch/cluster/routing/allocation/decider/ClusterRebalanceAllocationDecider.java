@@ -95,6 +95,7 @@ public class ClusterRebalanceAllocationDecider extends AllocationDecider {
         try {
             type = CLUSTER_ROUTING_ALLOCATION_ALLOW_REBALANCE_SETTING.get(settings);
         } catch (IllegalStateException e) {
+            System.out.println("ClusterRebalanceAllocationDecider 初始化");
             logger.warn("[{}] has a wrong value {}, defaulting to 'indices_all_active'",
                     CLUSTER_ROUTING_ALLOCATION_ALLOW_REBALANCE_SETTING,
                     CLUSTER_ROUTING_ALLOCATION_ALLOW_REBALANCE_SETTING.getRaw(settings));

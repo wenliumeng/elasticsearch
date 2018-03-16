@@ -246,7 +246,8 @@ public class Node implements Closeable {
     }
 
     protected Node(final Environment environment, Collection<Class<? extends Plugin>> classpathPlugins) {
-        final List<Closeable> resourcesToClose = new ArrayList<>(); // register everything we need to release in the case of an error
+        // register everything we need to release in the case of an error
+        final List<Closeable> resourcesToClose = new ArrayList<>();
         boolean success = false;
         {
             // use temp logger just to say we are starting. we can't use it later on because the node name might not be set
@@ -526,6 +527,7 @@ public class Node implements Closeable {
             logger.warn(
                 "version [{}] is a pre-release version of Elasticsearch and is not suitable for production",
                 Version.displayVersion(version, isSnapshot));
+            logger.info("version={},isSnashot={}",Version.displayVersion(version,isSnapshot),isSnapshot);
         }
     }
 

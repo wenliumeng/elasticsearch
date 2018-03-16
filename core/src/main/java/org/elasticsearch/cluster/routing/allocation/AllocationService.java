@@ -68,12 +68,14 @@ public class AllocationService extends AbstractComponent {
                              GatewayAllocator gatewayAllocator,
                              ShardsAllocator shardsAllocator, ClusterInfoService clusterInfoService) {
         this(settings, allocationDeciders, shardsAllocator, clusterInfoService);
+        System.out.println(String.format("实例化 AllocationService construct[1] settings%s%n" , settings.names()));
         setGatewayAllocator(gatewayAllocator);
     }
 
     public AllocationService(Settings settings, AllocationDeciders allocationDeciders,
                              ShardsAllocator shardsAllocator, ClusterInfoService clusterInfoService) {
         super(settings);
+        System.out.println(String.format("实例化 AllocationService construct[2]  settings%s%n" , settings.names()));
         this.allocationDeciders = allocationDeciders;
         this.shardsAllocator = shardsAllocator;
         this.clusterInfoService = clusterInfoService;

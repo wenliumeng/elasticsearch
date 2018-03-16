@@ -71,6 +71,7 @@ public class DiscoverySettings extends AbstractComponent {
 
     public DiscoverySettings(Settings settings, ClusterSettings clusterSettings) {
         super(settings);
+        System.out.println("DiscoverySettings 初始化");
         clusterSettings.addSettingsUpdateConsumer(NO_MASTER_BLOCK_SETTING, this::setNoMasterBlock);
         clusterSettings.addSettingsUpdateConsumer(PUBLISH_DIFF_ENABLE_SETTING, this::setPublishDiff);
         clusterSettings.addSettingsUpdateConsumer(COMMIT_TIMEOUT_SETTING, this::setCommitTimeout);

@@ -297,6 +297,7 @@ public abstract class MetaDataStateFormat<T> {
         //       new format (ie. legacy == false) then we know that the latest version state ought to use this new format.
         //       In case the state file with the latest version does not use the new format while older state files do,
         //       the list below will be empty and loading the state will fail
+        //       如果有多个数据存储路径，那么状态文件夹下可能会有多个最新状态版本。这种情况下，只会取最高的版本。如果至少有一个状态文件使用了新的格式format（legacy==false），那么最新的状态文件肯定是最新的的格式（format）。如果不是使用最新的状态文件，那下面的list将会是空的，且加载状态文件失败。
         Collection<PathAndStateId> pathAndStateIds = files
                 .stream()
                 .filter(new StateIdAndLegacyPredicate(maxStateId, maxStateIdIsLegacy))

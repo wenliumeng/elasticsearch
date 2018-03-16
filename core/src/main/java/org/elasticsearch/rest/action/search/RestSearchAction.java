@@ -87,6 +87,7 @@ public class RestSearchAction extends BaseRestHandler {
          * company.
          */
         IntConsumer setSize = size -> searchRequest.source().size(size);
+        logger.debug("准备Request");
         request.withContentOrSourceParamParserOrNull(parser ->
             parseSearchRequest(searchRequest, request, parser, setSize));
 
@@ -103,7 +104,7 @@ public class RestSearchAction extends BaseRestHandler {
     public static void parseSearchRequest(SearchRequest searchRequest, RestRequest request,
                                           XContentParser requestContentParser,
                                           IntConsumer setSize) throws IOException {
-
+        System.out.println("解析Search请求 parseSearchRequest");
         if (searchRequest.source() == null) {
             searchRequest.source(new SearchSourceBuilder());
         }

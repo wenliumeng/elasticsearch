@@ -99,6 +99,7 @@ public final class NodeEnvironment  implements Closeable {
         public final int minorDeviceNumber;
 
         public NodePath(Path path) throws IOException {
+            System.out.println("NodeEnvironment中的内部类NodePath开始实例化");
             this.path = path;
             this.indicesPath = path.resolve(INDICES_FOLDER);
             this.fileStore = Environment.getFileStore(path);
@@ -176,7 +177,10 @@ public final class NodeEnvironment  implements Closeable {
 
     public NodeEnvironment(Settings settings, Environment environment) throws IOException {
 
+        System.out.println("NodeEnvironment开始实例化");
+
         if (!DiscoveryNode.nodeRequiresLocalStorage(settings)) {
+            //dataNode，master以外的其他类型node，且不允许本地存储
             nodePaths = null;
             sharedDataPath = null;
             locks = null;
@@ -238,6 +242,8 @@ public final class NodeEnvironment  implements Closeable {
                     "failed to obtain node locks, tried [%s] with lock id%s;" +
                         " maybe these locations are not writable or multiple nodes were started without increasing [%s] (was [%d])?",
                     Arrays.toString(environment.dataWithClusterFiles()),
+
+
                     maxLocalStorageNodes == 1 ? " [0]" : "s [0--" + (maxLocalStorageNodes - 1) + "]",
                     MAX_LOCAL_STORAGE_NODES_SETTING.getKey(),
                     maxLocalStorageNodes);

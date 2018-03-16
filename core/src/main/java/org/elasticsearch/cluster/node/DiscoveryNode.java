@@ -46,6 +46,8 @@ public class DiscoveryNode implements Writeable, ToXContentFragment {
 
     public static boolean nodeRequiresLocalStorage(Settings settings) {
         boolean localStorageEnable = Node.NODE_LOCAL_STORAGE_SETTING.get(settings);
+        //不允许本地存储，并且该node是数据node或masterNode
+        //master和数据节点的storage不允许禁用
         if (localStorageEnable == false &&
             (Node.NODE_DATA_SETTING.get(settings) ||
                 Node.NODE_MASTER_SETTING.get(settings))
@@ -53,6 +55,18 @@ public class DiscoveryNode implements Writeable, ToXContentFragment {
             // TODO: make this a proper setting validation logic, requiring multi-settings validation
             throw new IllegalArgumentException("storage can not be disabled for master and data nodes");
         }
+
+        /**
+         *
+         * 允许本地存储，是dataNode     true
+         * 允许本地存储，是master       true
+         * 允许本地存储，其他类型node    true
+         *
+         * 不允许本地存储，是dataNode    抛错
+         * 不允许本地存储，是master      抛错
+         * 不允许本地存储，其他类型node   false
+         *
+         */
         return localStorageEnable;
     }
 
@@ -385,6 +399,7 @@ public class DiscoveryNode implements Writeable, ToXContentFragment {
         builder.startObject(getId());
         builder.field("name", getName());
         builder.field("ephemeral_id", getEphemeralId());
+        System.out.println("调用DiscoveryNode的ToXContent方法");
         builder.field("transport_address", getAddress().toString());
 
         builder.startObject("attributes");
