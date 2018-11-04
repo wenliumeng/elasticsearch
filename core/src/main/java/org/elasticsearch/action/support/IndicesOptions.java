@@ -119,7 +119,7 @@ public class IndicesOptions {
     public boolean ignoreAliases() {
         return (id & IGNORE_ALIASES) != 0;
     }
-    
+
     public void writeIndicesOptions(StreamOutput out) throws IOException {
         if (out.getVersion().onOrAfter(Version.V_6_0_0_alpha2)) {
             out.write(id);
@@ -267,9 +267,11 @@ public class IndicesOptions {
             boolean wildcardExpandToClosed, boolean allowAliasesToMultipleIndices, boolean forbidClosedIndices, boolean ignoreAliases) {
         byte id = 0;
         if (ignoreUnavailable) {
+            //索引不可用时是否忽略具体的指定指标
             id |= IGNORE_UNAVAILABLE;
         }
         if (allowNoIndices) {
+            //如果通配符表达式没有具体的索引，是否忽略该表达式
             id |= ALLOW_NO_INDICES;
         }
         if (wildcardExpandToOpen) {
