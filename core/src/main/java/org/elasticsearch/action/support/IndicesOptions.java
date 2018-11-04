@@ -275,6 +275,7 @@ public class IndicesOptions {
             id |= ALLOW_NO_INDICES;
         }
         if (wildcardExpandToOpen) {
+            //是否应该展开通配符表达式以打开索引
             id |= EXPAND_WILDCARDS_OPEN;
         }
         if (wildcardExpandToClosed) {
